@@ -18,13 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${InterFont.className} antialiased`}
+        className={`${InterFont.className} antialiased bg-[#050505] text-white/90 selection:bg-primary/30 selection:text-white min-h-screen`}
       >
-        <header>Ibuiltthis</header>
         {children}
-        <footer>Ibuiltthis Inc. All Rights Reserved.</footer>
       </body>
     </html>
   );

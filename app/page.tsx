@@ -1,9 +1,9 @@
-import HeroSection from "@/components/landingPage/hero-section";
+import IbuiltthisScroll from "@/components/IbuiltthisScroll";
 
 export default function Home() {
   return (
-    <>
-      <HeroSection />
-    </>
+    <main className="w-full">
+      <IbuiltthisScroll />
+    </main>
   );
 }
