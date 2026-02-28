@@ -157,7 +157,7 @@ export default function IbuiltthisScroll() {
     const ctaScale = useTransform(scrollYProgress, [0.85, 0.9, 1], [0.95, 1, 1], { ease: easeOut });
 
     return (
-        <div ref={containerRef} className="relative h-[400vh] bg-[#050505]">
+        <div ref={containerRef} className="relative h-[800vh] bg-[#050505]">
             {!isReady ? (
                 <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] text-white">
                     <div className="text-sm font-medium tracking-widest text-white/60 mb-4 uppercase">Initializing Experience</div>

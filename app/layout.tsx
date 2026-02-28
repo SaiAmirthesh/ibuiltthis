@@ -10,7 +10,9 @@ const InterFont = Inter({
 export const metadata: Metadata = {
   title: "Ibuiltthis",
   description: "ibuilthis is a platform for building and sharing projects with the world.",
-}; 
+};
+
+import SmoothScrolling from "@/components/SmoothScrolling";
 
 export default function RootLayout({
   children,
@@ -22,7 +24,9 @@ export default function RootLayout({
       <body
         className={`${InterFont.className} antialiased bg-[#050505] text-white/90 selection:bg-primary/30 selection:text-white min-h-screen`}
       >
-        {children}
+        <SmoothScrolling>
+          {children}
+        </SmoothScrolling>
       </body>
     </html>
   );
