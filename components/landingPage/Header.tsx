@@ -76,19 +76,27 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
                 <SignedOut>
-                    <SignInButton>
+                    <SignInButton forceRedirectUrl="/dashboard">
                         <button className="text-sm font-medium text-white/60 hover:text-white transition-colors">
                             Sign In
                         </button>
                     </SignInButton>
-                    <SignUpButton>
+                    <SignUpButton forceRedirectUrl="/dashboard">
                         <button className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]">
                             Sign Up
                         </button>
                     </SignUpButton>
                 </SignedOut>
                 <SignedIn>
-                    <UserButton appearance={{ elements: { userButtonAvatarBox: "w-10 h-10 border border-white/10" } }} />
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/dashboard"
+                            className="text-sm font-medium text-white/60 hover:text-white transition-colors"
+                        >
+                            Dashboard
+                        </Link>
+                        <UserButton appearance={{ elements: { userButtonAvatarBox: "w-10 h-10 border border-white/10" } }} />
+                    </div>
                 </SignedIn>
             </div>
         </motion.header>
