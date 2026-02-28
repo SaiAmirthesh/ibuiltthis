@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Layers } from "lucide-react";
 import Link from "next/link";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
     const { scrollY } = useScroll();
@@ -74,12 +75,21 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-                <Link
-                    href="/login"
-                    className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]"
-                >
-                    Get Started
-                </Link>
+                <SignedOut>
+                    <SignInButton>
+                        <button className="text-sm font-medium text-white/60 hover:text-white transition-colors">
+                            Sign In
+                        </button>
+                    </SignInButton>
+                    <SignUpButton>
+                        <button className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]">
+                            Sign Up
+                        </button>
+                    </SignUpButton>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton appearance={{ elements: { userButtonAvatarBox: "w-10 h-10 border border-white/10" } }} />
+                </SignedIn>
             </div>
         </motion.header>
     );
