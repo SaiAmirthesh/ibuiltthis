@@ -50,7 +50,7 @@ export default function Features() {
                 >
                     <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white/90 mb-4">
                         Everything you need.<br />
-                        <span className="text-white/40 font-light">Nothing you don't.</span>
+                        <span className="text-white/40 font-light">Nothing you don&apos;t.</span>
                     </h2>
                     <p className="text-lg text-white/60 max-w-xl font-light">
                         We removed the friction between building a great product and showing it to the world.

@@ -4,19 +4,10 @@ import React, { useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Layers } from "lucide-react";
 import Link from "next/link";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
     const { scrollY } = useScroll();
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        if (latest > 50) {
-            setIsScrolled(true);
-        } else {
-            setIsScrolled(false);
-        }
-    });
 
     const headerBg = useTransform(
         scrollY,
@@ -76,16 +67,11 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
                 <SignedOut>
-                    <SignInButton forceRedirectUrl="/dashboard">
-                        <button className="text-sm font-medium text-white/60 hover:text-white transition-colors">
-                            Sign In
-                        </button>
-                    </SignInButton>
-                    <SignUpButton forceRedirectUrl="/dashboard">
+                    <Link href="/getstarted">
                         <button className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]">
-                            Sign Up
+                            Get Started
                         </button>
-                    </SignUpButton>
+                    </Link>
                 </SignedOut>
                 <SignedIn>
                     <div className="flex items-center gap-4">
