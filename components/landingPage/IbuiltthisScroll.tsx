@@ -13,7 +13,6 @@ export default function IbuiltthisScroll() {
     const [loadedCount, setLoadedCount] = useState(0);
     const [isReady, setIsReady] = useState(false);
 
-    // Load images
     useEffect(() => {
         let isCancelled = false;
         const loadImages = async () => {

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { Code, Globe, Layout, Zap } from "lucide-react";
 
 export default function Features() {
@@ -41,13 +40,7 @@ export default function Features() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none opacity-50 mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.7 }}
-                    className="mb-16"
-                >
+                <div className="mb-16">
                     <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white/90 mb-4">
                         Everything you need.<br />
                         <span className="text-white/40 font-light">Nothing you don&apos;t.</span>
@@ -55,16 +48,12 @@ export default function Features() {
                     <p className="text-lg text-white/60 max-w-xl font-light">
                         We removed the friction between building a great product and showing it to the world.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
                     {features.map((feature, i) => (
-                        <motion.div
+                        <div
                             key={i}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
                             className={`group relative p-8 rounded-3xl border border-white/5 hover:border-primary/30 transition-all duration-500 overflow-hidden ${feature.colSpan} ${feature.bgClass}`}
                         >
                             <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -83,7 +72,7 @@ export default function Features() {
                                     </p>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

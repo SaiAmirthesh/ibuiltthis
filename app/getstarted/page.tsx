@@ -1,11 +1,36 @@
 "use client";
 
-import { SignIn } from "@clerk/nextjs";
+import { SignIn, SignUp } from "@clerk/nextjs";
 import Aurora from "@/components/auth/Aurora";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
 
 export default function SignInPage() {
+  const [isSignIn, setIsSignIn] = useState(true);
+
+  const sharedAppearance = {
+    elements: {
+      formButtonPrimary: 'bg-primary hover:bg-primary/90 text-white shadow-none',
+      card: 'bg-black border border-white/10 shadow-2xl w-full p-8 rounded-2xl flex flex-col gap-6',
+      headerTitle: 'hidden',
+      headerSubtitle: 'text-white/60 text-center tracking-tight text-xl mb-4',
+      socialButtonsBlockButton: 'h-12 bg-[#222222] border-white/5 text-white hover:bg-[#2a2a2a] rounded-sm transition-all',
+      socialButtonsBlockButtonText: 'text-white/90 font-medium text-sm',
+      dividerLine: 'bg-white/10',
+      dividerText: 'text-white/40',
+      formFieldLabel: 'text-white/80',
+      formFieldInput: 'bg-[#111111] border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm',
+      footerActionText: 'text-white/60',
+      footerActionLink: 'text-primary hover:text-primary/80 font-medium',
+      identityPreviewText: 'text-white',
+      identityPreviewEditButtonIcon: 'text-primary',
+      formFieldInputShowPasswordButton: 'text-white/60 hover:text-white',
+      rootBox: 'w-full',
+      socialButtonsProviderIcon__github: 'filter invert',
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen w-full bg-[#050505] flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -33,30 +58,33 @@ export default function SignInPage() {
             </h1>
           </div>
 
-          <SignIn
-            routing="hash"
-            appearance={{
-              elements: {
-                formButtonPrimary: 'bg-primary hover:bg-primary/90 text-white shadow-none',
-                card: 'bg-black border border-white/10 shadow-2xl w-full p-8 rounded-2xl flex flex-col gap-6',
-                headerTitle: 'hidden',
-                headerSubtitle: 'text-white/60 text-center tracking-tight text-xl mb-4',
-                socialButtonsBlockButton: 'h-12 bg-[#222222] border-white/5 text-white hover:bg-[#2a2a2a] rounded-sm transition-all',
-                socialButtonsBlockButtonText: 'text-white/90 font-medium text-sm',
-                dividerLine: 'bg-white/10',
-                dividerText: 'text-white/40',
-                formFieldLabel: 'text-white/80',
-                formFieldInput: 'bg-[#111111] border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm',
-                footerActionText: 'text-white/60',
-                footerActionLink: 'text-primary hover:text-primary/80 font-medium',
-                identityPreviewText: 'text-white',
-                identityPreviewEditButtonIcon: 'text-primary',
-                formFieldInputShowPasswordButton: 'text-white/60 hover:text-white',
-                rootBox: 'w-full',
-                socialButtonsProviderIcon__github: 'filter invert',
-              }
-            }}
-          />
+          {isSignIn ? (
+            <div className="w-full flex flex-col items-center gap-4">
+              <SignIn
+                routing="hash"
+                appearance={sharedAppearance}
+              />
+              <p className="text-white/60 text-sm">
+                Don&apos;t have an account?{" "}
+                <button onClick={() => setIsSignIn(false)} className="text-primary hover:text-primary/80 font-medium">
+                  Sign up
+                </button>
+              </p>
+            </div>
+          ) : (
+            <div className="w-full flex flex-col items-center gap-4">
+              <SignUp
+                routing="hash"
+                appearance={sharedAppearance}
+              />
+              <p className="text-white/60 text-sm">
+                Already have an account?{" "}
+                <button onClick={() => setIsSignIn(true)} className="text-primary hover:text-primary/80 font-medium">
+                  Sign in
+                </button>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
