@@ -38,7 +38,7 @@ export default function SignInPage() {
             appearance={{
               elements: {
                 formButtonPrimary: 'bg-primary hover:bg-primary/90 text-white shadow-none',
-                card: 'bg-transparent shadow-none w-full p-0 flex flex-col gap-6',
+                card: 'bg-black border border-white/10 shadow-2xl w-full p-8 rounded-2xl flex flex-col gap-6',
                 headerTitle: 'hidden',
                 headerSubtitle: 'text-white/60 text-center tracking-tight text-xl mb-4',
                 socialButtonsBlockButton: 'h-12 bg-[#222222] border-white/5 text-white hover:bg-[#2a2a2a] rounded-sm transition-all',
