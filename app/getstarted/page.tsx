@@ -5,14 +5,50 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, signUp } from "@/lib/auth-client";
 
 export default function SignInPage() {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleAuth = (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/dashboard");
+    setLoading(true);
+
+    if (isSignIn) {
+      await signIn.email({
+        email,
+        password,
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/dashboard");
+          },
+          onError: (ctx) => {
+            alert(ctx.error.message);
+            setLoading(false);
+          }
+        }
+      });
+    } else {
+      await signUp.email({
+        email,
+        password,
+        name,
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/dashboard");
+          },
+          onError: (ctx) => {
+            alert(ctx.error.message);
+            setLoading(false);
+          }
+        }
+      });
+    }
   };
 
   return (
@@ -51,27 +87,34 @@ export default function SignInPage() {
                 <input
                   type="text"
                   placeholder="Name"
-                  className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
                   required
                 />
               )}
               <input
                 type="email"
                 placeholder="Email address"
-                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
                 required
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
                 required
               />
               <button
                 type="submit"
-                className="bg-primary hover:bg-primary/90 text-white shadow-none h-12 rounded-sm font-medium transition-colors"
+                disabled={loading}
+                className="bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white shadow-none h-12 rounded-sm font-medium transition-colors"
               >
-                {isSignIn ? "Sign In" : "Sign Up"}
+                {loading ? "Please wait..." : (isSignIn ? "Sign In" : "Sign Up")}
               </button>
             </form>
 

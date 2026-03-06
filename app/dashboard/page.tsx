@@ -2,9 +2,14 @@ import React, { Suspense } from "react";
 import MetricCard from "@/components/dashboard/MetricCard";
 import RecentProjects from "@/components/dashboard/RecentProjects";
 import { Plus } from "lucide-react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function DashboardOverview() {
-    const firstName = "Creator";
+    const session = await auth.api.getSession({
+        headers: await headers()
+    });
+    const firstName = session?.user?.name?.split(" ")[0] || "Creator";
 
     return (
         <div className="flex flex-col gap-8 pb-12">

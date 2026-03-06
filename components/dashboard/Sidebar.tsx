@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, Layers, Menu, X, User } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, Layers, Menu, X, LogOut } from "lucide-react";
+import { useSession, signOut } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -15,7 +17,19 @@ const navLinks = [
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const router = useRouter();
+    const { data: session, isPending } = useSession();
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleSignOut = async () => {
+        await signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/getstarted");
+                },
+            },
+        });
+    };
 
     return (
         <>
@@ -85,15 +99,15 @@ export default function Sidebar() {
                 <div className="border-t border-white/10 pt-4 px-3 flex items-center justify-between">
                     <div className="flex flex-col">
                         <span className="text-sm font-medium text-white/90 truncate max-w-[140px]">
-                            Creator
+                            {isPending ? "Loading..." : session?.user?.name || "User"}
                         </span>
                         <span className="text-xs text-white/40 truncate max-w-[140px]">
-                            creator@example.com
+                            {isPending ? "" : session?.user?.email || ""}
                         </span>
                     </div>
-                    <div className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center">
-                        <User className="w-4 h-4 text-white/70" />
-                    </div>
+                    <button onClick={handleSignOut} className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center hover:bg-red-500/10 transition-colors group">
+                        <LogOut className="w-4 h-4 text-white/70 group-hover:text-red-500 transition-colors" />
+                    </button>
                 </div>
             </motion.aside>
         </>
