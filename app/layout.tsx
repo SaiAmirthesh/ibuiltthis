@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
-import { dark } from '@clerk/themes'
+
 
 const InterFont = Inter({
   subsets: ["latin"],
@@ -23,16 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang="en" className="dark">
-        <body
-          className={`${InterFont.className} antialiased bg-[#050505] text-white/90 selection:bg-primary/30 selection:text-white min-h-screen`}
-        >
-          <SmoothScrolling>
-            {children}
-          </SmoothScrolling>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className="dark">
+      <body
+        className={`${InterFont.className} antialiased bg-[#050505] text-white/90 selection:bg-primary/30 selection:text-white min-h-screen`}
+      >
+        <SmoothScrolling>
+          {children}
+        </SmoothScrolling>
+      </body>
+    </html>
   );
 }

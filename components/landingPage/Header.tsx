@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Layers } from "lucide-react";
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
     const { scrollY } = useScroll();
@@ -37,12 +36,12 @@ export default function Header() {
         <motion.header
             style={{
                 backgroundColor: headerBg,
-                borderBottomColor: headerBorder,
-                borderBottomWidth: "1px",
+                borderColor: headerBorder,
+                borderWidth: "1px",
                 backdropFilter: headerBlur,
                 WebkitBackdropFilter: headerBlur,
             }}
-            className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 transition-all duration-300"
+            className="fixed top-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-6xl z-50 flex items-center justify-between px-4 md:px-8 py-3 rounded-full transition-all duration-300"
         >
             <Link href="/" className="flex items-center gap-2 group">
                 <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -66,24 +65,11 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-                <SignedOut>
-                    <Link href="/getstarted">
-                        <button className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]">
-                            Get Started
-                        </button>
-                    </Link>
-                </SignedOut>
-                <SignedIn>
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href="/dashboard"
-                            className="text-sm font-medium text-white/60 hover:text-white transition-colors"
-                        >
-                            Dashboard
-                        </Link>
-                        <UserButton appearance={{ elements: { userButtonAvatarBox: "w-10 h-10 border border-white/10" } }} />
-                    </div>
-                </SignedIn>
+                <Link href="/getstarted">
+                    <button className="px-5 py-2 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/50 hover:border-primary rounded-full transition-all shadow-[0_0_15px_rgba(var(--primary),0.1)] hover:shadow-[0_0_25px_rgba(var(--primary),0.3)]">
+                        Get Started
+                    </button>
+                </Link>
             </div>
         </motion.header>
     );

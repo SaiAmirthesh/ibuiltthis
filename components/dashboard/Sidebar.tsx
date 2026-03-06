@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, Layers, Menu, X } from "lucide-react";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, Layers, Menu, X, User } from "lucide-react";
 
 const navLinks = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -16,7 +15,6 @@ const navLinks = [
 
 export default function Sidebar() {
     const pathname = usePathname();
-    const { user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -87,13 +85,15 @@ export default function Sidebar() {
                 <div className="border-t border-white/10 pt-4 px-3 flex items-center justify-between">
                     <div className="flex flex-col">
                         <span className="text-sm font-medium text-white/90 truncate max-w-[140px]">
-                            {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : 'Loading...'}
+                            Creator
                         </span>
                         <span className="text-xs text-white/40 truncate max-w-[140px]">
-                            {user?.primaryEmailAddress?.emailAddress || 'user@example.com'}
+                            creator@example.com
                         </span>
                     </div>
-                    <UserButton appearance={{ elements: { userButtonAvatarBox: "w-8 h-8 rounded-lg border border-white/10" } }} />
+                    <div className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center">
+                        <User className="w-4 h-4 text-white/70" />
+                    </div>
                 </div>
             </motion.aside>
         </>

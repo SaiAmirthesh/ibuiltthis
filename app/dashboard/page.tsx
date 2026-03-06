@@ -1,12 +1,10 @@
 import React, { Suspense } from "react";
 import MetricCard from "@/components/dashboard/MetricCard";
 import RecentProjects from "@/components/dashboard/RecentProjects";
-import { currentUser } from "@clerk/nextjs/server";
 import { Plus } from "lucide-react";
 
 export default async function DashboardOverview() {
-    const user = await currentUser();
-    const firstName = user?.firstName || "Creator";
+    const firstName = "Creator";
 
     return (
         <div className="flex flex-col gap-8 pb-12">
