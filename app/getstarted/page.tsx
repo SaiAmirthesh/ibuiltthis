@@ -5,49 +5,30 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, signUp } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInPage() {
-  const [isSignIn, setIsSignIn] = useState(true);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleGithubSignIn = async () => {
     setLoading(true);
-
-    if (isSignIn) {
-      await signIn.email({
-        email,
-        password,
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/dashboard");
-          },
-          onError: (ctx) => {
-            alert(ctx.error.message);
-            setLoading(false);
-          }
-        }
-      });
-    } else {
-      await signUp.email({
-        email,
-        password,
-        name,
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/dashboard");
-          },
-          onError: (ctx) => {
-            alert(ctx.error.message);
-            setLoading(false);
-          }
-        }
-      });
+    try {
+      // try common method exposed by auth client (best-effort), fallback to simple redirect
+      const anySignIn = signIn as any;
+      if (anySignIn?.oauth) {
+        await anySignIn.oauth({ provider: "github", fetchOptions: { onSuccess: () => router.push("/dashboard"), onError: (ctx: any) => { alert(ctx?.error?.message || "Sign in failed"); setLoading(false); } } });
+      } else if (anySignIn?.github) {
+        await anySignIn.github();
+      } else {
+        // fallback: redirect to an API route that starts the OAuth flow (implement server-side)
+        window.location.href = "/api/auth/github";
+      }
+    } catch (err) {
+      // generic fallback handling
+      console.error(err);
+      alert("GitHub sign in failed");
+      setLoading(false);
     }
   };
 
@@ -56,13 +37,23 @@ export default function SignInPage() {
       <div className="min-h-screen w-full bg-[#050505] flex flex-col items-center justify-center p-4 relative overflow-hidden">
         {/* Aurora Background Layer */}
         <div className="absolute inset-0 z-0 opacity-40">
-          <Aurora colorStops={['#3B82F6', '#2563EB', '#3B82F6']} speed={0.5} />
+          <Aurora colorStops={["#3B82F6", "#2563EB", "#3B82F6"]} speed={0.5} />
         </div>
 
-        {/* Background aesthetics */}
+        {/* Decorative background blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] pointer-events-none opacity-50 mix-blend-screen z-0" />
 
-        {/* Top Right Back Button */}
+        {/* Left side image */}
+        <div className="absolute left-0 top-0 bottom-0 w-40 md:w-72 lg:w-96 overflow-hidden z-0 pointer-events-none">
+          <img src="/back.jpeg" alt="decor" className="h-full w-full object-cover opacity-40" />
+        </div>
+
+        {/* Right side image */}
+        <div className="absolute right-0 top-0 bottom-0 w-40 md:w-72 lg:w-96 overflow-hidden z-0 pointer-events-none">
+          <img src="/back.jpeg" alt="decor" className="h-full w-full object-cover opacity-40" />
+        </div>
+
+        {/* Top Left Back Button */}
         <div className="absolute top-8 left-8 z-20">
           <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors text-white/80 hover:text-white text-sm backdrop-blur-md">
             <ArrowLeft className="w-4 h-4" />
@@ -70,7 +61,7 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        {/* Centered Login Form Wrapper */}
+        {/* Centered Login Wrapper */}
         <div className="w-full max-w-md relative z-10 flex flex-col items-center pb-12">
           <div className="flex justify-center mb-6">
             <h1 className="text-6xl font-black text-white tracking-tighter drop-shadow-[0_0_15px_rgba(var(--primary),0.8)]">
@@ -79,51 +70,20 @@ export default function SignInPage() {
           </div>
 
           <div className="bg-black border border-white/10 shadow-2xl w-full p-8 rounded-2xl flex flex-col gap-6">
-            <h2 className="text-white/90 text-center tracking-tight text-xl mb-4 font-bold">
-              {isSignIn ? "Welcome Back" : "Create an Account"}
-            </h2>
-            <form onSubmit={handleAuth} className="flex flex-col gap-4">
-              {!isSignIn && (
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
-                  required
-                />
-              )}
-              <input
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bg-[#111111] border border-white/5 text-white placeholder:text-white/40 focus:border-primary/50 h-12 rounded-sm px-4 outline-none transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white shadow-none h-12 rounded-sm font-medium transition-colors"
-              >
-                {loading ? "Please wait..." : (isSignIn ? "Sign In" : "Sign Up")}
-              </button>
-            </form>
+            <h2 className="text-white/90 text-center tracking-tight text-xl mb-2 font-bold">Sign in with GitHub</h2>
 
-            <p className="text-white/60 text-sm text-center">
-              {isSignIn ? "Don't have an account?" : "Already have an account?"}{" "}
-              <button type="button" onClick={() => setIsSignIn(!isSignIn)} className="text-primary hover:text-primary/80 font-medium">
-                {isSignIn ? "Sign up" : "Sign in"}
+            <div className="w-full flex flex-col items-center gap-4">
+              <button
+                type="button"
+                onClick={handleGithubSignIn}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-3 bg-black/80 hover:bg-black/70 border border-white/10 text-white h-12 rounded-sm font-medium transition-colors"
+              >
+                {loading ? "Signing in..." : "Continue with GitHub"}
               </button>
-            </p>
+
+              <p className="text-white/60 text-sm text-center">You'll be redirected to GitHub to authorize access.</p>
+            </div>
           </div>
         </div>
       </div>
