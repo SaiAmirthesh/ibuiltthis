@@ -21,7 +21,6 @@ export default function AboutSection() {
                     transition={{ duration: 0.6 }}
                     className="mb-16"
                 >
-
                     <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white/90">
                         I learn by building.<br />
                         <span className="text-white/40 font-light">Always exploring, always engineering.</span>
@@ -84,7 +83,7 @@ export default function AboutSection() {
                         </div>
                     </motion.div>
 
-                    {/* Right: Quick Cards / Status */}
+                    {/* Right: Dedicated Metric Cards */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -92,30 +91,48 @@ export default function AboutSection() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-5 grid grid-cols-1 gap-4"
                     >
-                        {/* Education Card */}
-                        <div className="bg-[#0a0a0a] border border-white/10 hover:border-primary/40 rounded-2xl p-6 transition-all duration-300">
+                        {/* 1. Dedicated Standout CGPA Box */}
+                        <div className="bg-gradient-to-br from-primary/10 via-[#0a0a0a] to-[#0a0a0a] border border-primary/40 hover:border-primary/80 rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 shadow-[0_0_25px_rgba(103,232,249,0.1)]">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3.5">
+                                    <div className="p-3 bg-primary/20 text-primary rounded-xl border border-primary/30 shadow-[0_0_15px_rgba(103,232,249,0.25)]">
+                                        <Award className="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <span className="text-xs uppercase tracking-wider text-primary font-semibold block">Academic Standing</span>
+                                        <span className="text-xs text-white/60">VIT · B.Tech CSE (AI & Robotics)</span>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                                        9.44<span className="text-primary text-base sm:text-lg font-medium"> / 10</span>
+                                    </div>
+                                    <span className="inline-block mt-1 text-[11px] font-mono text-cyan-300 bg-primary/15 px-2.5 py-0.5 rounded-full border border-primary/30">
+                                        CGPA
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 2. Education Institution Card */}
+                        <div className="bg-[#0a0a0a] border border-white/10 hover:border-white/20 rounded-2xl p-6 transition-all duration-300">
                             <div className="flex items-start gap-4">
-                                <div className="p-3 bg-primary/10 text-primary rounded-xl border border-primary/20">
+                                <div className="p-3 bg-white/5 text-primary rounded-xl border border-white/10">
                                     <GraduationCap className="w-6 h-6" />
                                 </div>
                                 <div className="flex-1">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs uppercase tracking-wider text-primary font-semibold">Education</span>
-                                        <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/30">
-                                            <Award className="w-3 h-3" /> CGPA: 9.44
-                                        </span>
-                                    </div>
+                                    <span className="text-xs uppercase tracking-wider text-white/40 font-semibold block">University</span>
                                     <h3 className="text-base font-semibold text-white mt-1">
                                         {bioData.education.institution}
                                     </h3>
                                     <p className="text-xs text-white/60 mt-0.5">
-                                        {bioData.education.degree}
+                                        {bioData.education.degree} 
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Next Role Card */}
+                        {/* 3. Next Role Card */}
                         <div className="bg-[#0a0a0a] border border-primary/30 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl p-6 relative overflow-hidden">
                             <div className="flex items-start gap-4">
                                 <div className="p-3 bg-primary/20 text-primary rounded-xl border border-primary/30 shadow-[0_0_15px_rgba(103,232,249,0.3)]">
@@ -133,7 +150,7 @@ export default function AboutSection() {
                             </div>
                         </div>
 
-                        {/* Location & Status Card */}
+                        {/* 4. Location & Stack Card */}
                         <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex items-center gap-3">

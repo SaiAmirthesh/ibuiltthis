@@ -16,42 +16,47 @@ export default function IbuiltthisScroll() {
     useEffect(() => {
         let isCancelled = false;
         const loadImages = async () => {
-            const loadedImages: HTMLImageElement[] = [];
+            const loadedImages: HTMLImageElement[] = new Array(TOTAL_FRAMES);
             let loaded = 0;
 
-            for (let i = 1; i <= TOTAL_FRAMES; i++) {
-                const img = new Image();
-                const paddedIndex = i.toString().padStart(3, "0");
-                img.src = `/sequence/ezgif-frame-${paddedIndex}.jpg`;
+            // Load images in concurrent batches for smooth, fast 0-100 progress
+            const BATCH_SIZE = 12;
+            for (let i = 1; i <= TOTAL_FRAMES; i += BATCH_SIZE) {
+                if (isCancelled) break;
+                const batchPromises = [];
 
-                await new Promise<void>((resolve) => {
-                    img.onload = () => {
-                        if (!isCancelled) {
-                            loadedImages.push(img);
-                            loaded++;
-                            setLoadedCount(loaded);
-                        }
-                        resolve();
-                    };
-                    img.onerror = () => {
-                        console.error(`Failed to load frame ${i}`);
-                        if (loadedImages.length > 0) {
-                            loadedImages.push(loadedImages[loadedImages.length - 1]);
-                        } else {
-                            loadedImages.push(img); // push empty/broken
-                        }
-                        if (!isCancelled) {
-                            loaded++;
-                            setLoadedCount(loaded);
-                        }
-                        resolve();
-                    };
-                });
+                for (let j = i; j < i + BATCH_SIZE && j <= TOTAL_FRAMES; j++) {
+                    const p = new Promise<void>((resolve) => {
+                        const img = new window.Image();
+                        const paddedIndex = j.toString().padStart(3, "0");
+                        img.src = `/sequence/ezgif-frame-${paddedIndex}.jpg`;
+
+                        img.onload = () => {
+                            if (!isCancelled) {
+                                loadedImages[j - 1] = img;
+                                loaded++;
+                                setLoadedCount(loaded);
+                            }
+                            resolve();
+                        };
+                        img.onerror = () => {
+                            if (!isCancelled) {
+                                loaded++;
+                                setLoadedCount(loaded);
+                            }
+                            resolve();
+                        };
+                    });
+                    batchPromises.push(p);
+                }
+
+                await Promise.all(batchPromises);
             }
 
             if (!isCancelled) {
-                setImages(loadedImages);
-                setIsReady(true);
+                setImages(loadedImages.filter(Boolean));
+                // Small smooth transition out
+                setTimeout(() => setIsReady(true), 300);
             }
         };
 
@@ -92,34 +97,36 @@ export default function IbuiltthisScroll() {
                     canvas.height = window.innerHeight;
                 }
 
-                let drawWidth, drawHeight, offsetX = 0, offsetY = 0;
+                ctx.fillStyle = "#050505";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                let drawWidth: number;
+                let drawHeight: number;
+                let offsetX: number;
+                let offsetY: number;
 
                 if (isMobile) {
-                    // Contain
-                    if (windowRatio < imgRatio) {
-                        drawWidth = canvas.width;
-                        drawHeight = canvas.width / imgRatio;
-                        offsetY = (canvas.height - drawHeight) / 2;
-                    } else {
-                        drawHeight = canvas.height;
-                        drawWidth = canvas.height * imgRatio;
-                        offsetX = (canvas.width - drawWidth) / 2;
-                    }
-                } else {
-                    // Cover
+                    // Mobile Cover
                     if (windowRatio > imgRatio) {
                         drawWidth = canvas.width;
                         drawHeight = canvas.width / imgRatio;
-                        offsetY = (canvas.height - drawHeight) / 2;
                     } else {
                         drawHeight = canvas.height;
                         drawWidth = canvas.height * imgRatio;
-                        offsetX = (canvas.width - drawWidth) / 2;
+                    }
+                } else {
+                    // Desktop Cover/Contain hybrid
+                    if (windowRatio > imgRatio) {
+                        drawWidth = canvas.width;
+                        drawHeight = canvas.width / imgRatio;
+                    } else {
+                        drawHeight = canvas.height;
+                        drawWidth = canvas.height * imgRatio;
                     }
                 }
 
-                ctx.fillStyle = "#050505";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                offsetX = (canvas.width - drawWidth) / 2;
+                offsetY = (canvas.height - drawHeight) / 2;
 
                 ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
             }
@@ -127,19 +134,22 @@ export default function IbuiltthisScroll() {
             animationFrameId = requestAnimationFrame(render);
         };
 
-        render();
+        animationFrameId = requestAnimationFrame(render);
 
-        return () => cancelAnimationFrame(animationFrameId);
+        return () => {
+            cancelAnimationFrame(animationFrameId);
+        };
     }, [isReady, images, frameIndex]);
 
+    // Narrative Timeline Transforms
     const easeOut = cubicBezier(0.16, 1, 0.3, 1);
 
     // 0% - 20% Hero
-    const heroOpacity = useTransform(scrollYProgress, [0, 0.15, 0.22], [1, 1, 0], { ease: easeOut });
-    const heroY = useTransform(scrollYProgress, [0, 0.22], [0, -50], { ease: easeOut });
-    const heroBlur = useTransform(scrollYProgress, [0, 0.15, 0.22], ["blur(0px)", "blur(0px)", "blur(10px)"]);
+    const heroOpacity = useTransform(scrollYProgress, [0, 0.12, 0.2], [1, 1, 0], { ease: easeOut });
+    const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -60], { ease: easeOut });
+    const heroBlur = useTransform(scrollYProgress, [0, 0.15, 0.2], ["blur(0px)", "blur(0px)", "blur(10px)"]);
 
-    // 25% - 48% Break into components
+    // 25% - 50% Philosophy / Quote
     const compOpacity = useTransform(scrollYProgress, [0.25, 0.3, 0.45, 0.5], [0, 1, 1, 0], { ease: easeOut });
     const compY = useTransform(scrollYProgress, [0.25, 0.3, 0.45, 0.5], [40, 0, 0, -40], { ease: easeOut });
     const compBlur = useTransform(scrollYProgress, [0.25, 0.3, 0.45, 0.5], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
@@ -155,15 +165,22 @@ export default function IbuiltthisScroll() {
     const ctaBlur = useTransform(scrollYProgress, [0.85, 0.9, 1], ["blur(10px)", "blur(0px)", "blur(0px)"]);
     const ctaScale = useTransform(scrollYProgress, [0.85, 0.9, 1], [0.95, 1, 1], { ease: easeOut });
 
+    const percent = Math.min(100, Math.round((loadedCount / TOTAL_FRAMES) * 100));
+
     return (
         <div ref={containerRef} className="relative h-[800vh] bg-[#050505]">
             {!isReady ? (
-                <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] text-white">
-                    <div className="text-sm font-medium tracking-widest text-white/60 mb-4 uppercase">Initializing Experience</div>
-                    <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] text-white select-none px-6">
+                    {/* Minimal percentage counter */}
+                    <div className="text-4xl sm:text-5xl font-mono font-bold tracking-tight text-white mb-4">
+                        {percent}<span className="text-primary font-normal text-2xl sm:text-3xl ml-0.5">%</span>
+                    </div>
+
+                    {/* Clean progress bar */}
+                    <div className="w-52 sm:w-64 h-1 bg-white/10 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-primary transition-all duration-300 ease-out md:shadow-[0_0_15px_rgba(103,232,249,0.5)]"
-                            style={{ width: `${(loadedCount / TOTAL_FRAMES) * 100}%` }}
+                            className="h-full bg-primary rounded-full transition-all duration-100 ease-out shadow-[0_0_12px_rgba(103,232,249,0.8)]"
+                            style={{ width: `${percent}%` }}
                         />
                     </div>
                 </div>
@@ -183,7 +200,6 @@ export default function IbuiltthisScroll() {
                             style={{ opacity: heroOpacity, y: heroY, filter: heroBlur }}
                             className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
                         >
-                            
                             <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white/90 drop-shadow-2xl">
                                 Sai <span className="text-primary drop-shadow-[0_0_35px_rgba(103,232,249,0.8)]">Amirthesh</span>
                             </h1>
@@ -220,50 +236,51 @@ export default function IbuiltthisScroll() {
                             style={{ opacity: ecoOpacity, y: ecoY, filter: ecoBlur }}
                             className="absolute inset-0 flex flex-col items-end justify-center right-0 md:right-20 px-8 md:px-0 text-right max-w-3xl ml-auto"
                         >
-                            <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-2 block">
-                                Technology Core
-                            </span>
-                            <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl leading-tight">
-                                Java · Spring Boot<br />
-                                <span className="text-primary drop-shadow-[0_0_25px_rgba(103,232,249,0.6)]">Backend & AI</span>
-                            </h2>
-                            <p className="mt-4 text-base sm:text-xl text-white/60 font-light max-w-xl">
-                                High performance APIs, clean architecture, transactional database schemas, and intelligent RAG workflows.
-                            </p>
+                            <div className="border-r-4 border-primary pr-6 md:pr-8 py-2">
+                                <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-2 block">
+                                    Technical Architecture
+                                </span>
+                                <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl leading-tight">
+                                    Java · Spring Boot<br />
+                                    <span className="text-primary font-medium">Backend & AI Systems</span>
+                                </h2>
+                                <p className="text-white/60 mt-4 text-base sm:text-lg max-w-md ml-auto">
+                                    Designing high-throughput microservices, API gateways, database optimization, and intelligent pipelines.
+                                </p>
+                            </div>
                         </motion.div>
 
                         {/* FINAL CTA */}
                         <motion.div
                             style={{ opacity: ctaOpacity, y: ctaY, filter: ctaBlur, scale: ctaScale }}
-                            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-auto px-4"
+                            className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
                         >
-                            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white/90 tracking-tighter drop-shadow-2xl mb-6">
-                                Building practical software<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-300 to-blue-400">
-                                    that solves real problems.
-                                </span>
+                            <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-3">
+                                Ready to Explore
+                            </span>
+                            <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl max-w-4xl">
+                                Building practical software that solves real problems.
                             </h2>
-                            <p className="text-base sm:text-xl text-white/60 font-light max-w-2xl mb-10">
-                                Explore production-grade architectures, system designs, and live activity.
+                            <p className="text-white/60 mt-4 text-base sm:text-xl max-w-2xl font-light">
+                                Scroll down to explore my background, technical skills, production projects, and real-time activity metrics.
                             </p>
-                            <div className="flex flex-wrap items-center justify-center gap-4">
+                            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 pointer-events-auto">
                                 <a
                                     href="#projects"
-                                    className="px-8 py-4 bg-primary text-black hover:bg-primary/90 rounded-full font-semibold tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(103,232,249,0.4)] hover:shadow-[0_0_40px_rgba(103,232,249,0.7)] flex items-center gap-2 text-base md:text-lg"
+                                    className="px-8 py-3.5 bg-primary text-black font-semibold rounded-full hover:bg-primary/90 transition-all duration-200 shadow-[0_0_25px_rgba(103,232,249,0.4)] hover:shadow-[0_0_35px_rgba(103,232,249,0.6)]"
                                 >
                                     Explore Projects
-                                    <span>↓</span>
                                 </a>
                                 <a
                                     href="/Sai_Resume.pdf"
                                     download="Sai_Amirthesh_Resume.pdf"
-                                    className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/15 hover:border-primary/50 rounded-full font-semibold tracking-tight transition-all duration-300 backdrop-blur-md flex items-center gap-2 text-base md:text-lg"
+                                    className="px-8 py-3.5 bg-white/5 text-white font-medium border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-200"
                                 >
                                     Download Resume
-                                    <span>↓</span>
                                 </a>
                             </div>
                         </motion.div>
+
                     </div>
                 </div>
             )}
