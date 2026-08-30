@@ -10,6 +10,14 @@ const InterFont = Inter({
 export const metadata: Metadata = {
   title: "Sai Amirthesh — Software Engineer Portfolio",
   description: "Computer Science student specializing in backend systems, distributed architectures, Java/Spring Boot, Python, and applied AI.",
+  icons: {
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/MyLogo.png", type: "image/png" },
+    ],
+    shortcut: "/logo.svg",
+    apple: "/MyLogo.png",
+  },
 };
 
 import SmoothScrolling from "@/components/ui/SmoothScrolling";

@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, Maximize2, Minimize2, CornerDownLeft, Sparkles, ExternalLink, Download } from "lucide-react";
+import Image from "next/image";
+import myLogo from "@/public/MyLogo.png";
 import { bioData } from "@/data/bio";
 import { projectsData } from "@/data/projects";
 import { experienceData } from "@/data/experience";
@@ -351,11 +353,10 @@ export default function TerminalCLI({
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.96, y: 20 }}
                         transition={{ duration: 0.22, ease: "easeOut" }}
-                        className={`relative z-10 bg-[#0a0a0a]/98 border border-primary/40 rounded-3xl shadow-[0_0_80px_rgba(103,232,249,0.3)] flex flex-col overflow-hidden backdrop-blur-2xl transition-all duration-300 overscroll-contain ${
-                            isMaximized
+                        className={`relative z-10 bg-[#0a0a0a]/98 border border-primary/40 rounded-3xl shadow-[0_0_80px_rgba(103,232,249,0.3)] flex flex-col overflow-hidden backdrop-blur-2xl transition-all duration-300 overscroll-contain ${isMaximized
                                 ? "w-full h-full max-w-none max-h-none rounded-none"
                                 : "w-full max-w-4xl lg:max-w-5xl h-[650px] md:h-[720px] max-h-[90vh]"
-                        }`}
+                            }`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Title bar */}
@@ -380,7 +381,13 @@ export default function TerminalCLI({
                                     aria-label="Toggle maximize terminal"
                                 />
                                 <div className="ml-3 flex items-center gap-2 text-xs font-mono text-white/70">
-                                    <Terminal className="w-3.5 h-3.5 text-primary" />
+                                    <div className="w-4 h-4 rounded-full overflow-hidden relative shrink-0 border border-primary/30 flex items-center justify-center bg-black">
+                                        <Image
+                                            src={myLogo}
+                                            alt="Logo"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
                                     <span>sai@portfolio: ~ (zsh)</span>
                                 </div>
                             </div>

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Terminal, Download, Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import myLogo from "@/public/MyLogo.png";
 import TerminalCLI from "@/components/portfolio/TerminalCLI";
 
 export default function Header() {
@@ -63,8 +65,13 @@ export default function Header() {
                         className="flex items-center gap-2.5 group text-left focus:outline-none"
                         title="Click to launch interactive CLI terminal (⌘K / Ctrl+K)"
                     >
-                        <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/25 border border-primary/25 group-hover:border-primary/60 transition-all duration-300 shadow-[0_0_12px_rgba(103,232,249,0.15)] group-hover:shadow-[0_0_20px_rgba(103,232,249,0.4)]">
-                            <Terminal className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden border border-primary/40 group-hover:border-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(103,232,249,0.25)] group-hover:shadow-[0_0_22px_rgba(103,232,249,0.5)] group-hover:scale-105 bg-black flex items-center justify-center">
+                            <Image
+                                src={myLogo}
+                                alt="Sai Amirthesh Logo"
+                                className="w-full h-full object-cover"
+                                priority
+                            />
                         </div>
                         <span className="text-lg font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
                             Sai<span className="text-primary drop-shadow-[0_0_15px_rgba(103,232,249,0.7)]">Amirthesh</span>

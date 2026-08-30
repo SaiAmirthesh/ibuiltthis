@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Download, Terminal, Check, Copy, ExternalLink, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail, Download, Check, Copy, ExternalLink, Code2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import myLogo from "@/public/MyLogo.png";
 import { bioData } from "@/data/bio";
 
 export default function Contact() {
@@ -88,10 +90,14 @@ export default function Contact() {
                         className="flex flex-col items-start lg:items-end gap-6"
                     >
                         <Link href="/" className="flex items-center gap-2.5 group">
-                            <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 border border-primary/20 transition-all duration-300">
-                                <Terminal className="w-5 h-5 text-primary" />
+                            <div className="relative w-9 h-9 rounded-full overflow-hidden border border-primary/40 group-hover:border-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(103,232,249,0.25)] group-hover:shadow-[0_0_22px_rgba(103,232,249,0.5)] group-hover:scale-105 bg-black flex items-center justify-center">
+                                <Image
+                                    src={myLogo}
+                                    alt="Sai Amirthesh Logo"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
-                            <span className="text-2xl font-bold tracking-tight text-white/90">
+                            <span className="text-2xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
                                 Sai<span className="text-primary drop-shadow-[0_0_15px_rgba(103,232,249,0.7)]">Amirthesh</span>
                             </span>
                         </Link>

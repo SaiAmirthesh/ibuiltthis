@@ -39,7 +39,7 @@ export const bioData: BioData = {
   status: {
     studying: "Computer Science — AI & Robotics @ VIT",
     building: "Software projects across backend, AI and systems",
-    nextRole: "Incoming Software Engineering Intern @ Cisco",
+    nextRole: "Software Engineering Intern @ Cisco",
   },
   links: {
     github: "https://github.com/SaiAmirthesh",
