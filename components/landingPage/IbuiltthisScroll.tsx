@@ -189,8 +189,8 @@ export default function IbuiltthisScroll() {
                     {/* Canvas Background */}
                     <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover lg:object-contain" />
 
-                    {/* Dark subtle overlay for text readability */}
-                    <div className="absolute inset-0 bg-[#050505]/40 md:bg-[#050505]/20 pointer-events-none" />
+                    {/* Subtle overlay for text contrast */}
+                    <div className="absolute inset-0 bg-[#050505]/20 md:bg-[#050505]/10 pointer-events-none" />
 
                     {/* Narrative Layers */}
                     <div className="absolute inset-0 max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center pointer-events-none">
