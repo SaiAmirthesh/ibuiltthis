@@ -8,7 +8,7 @@ const InterFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sai Amirthesh — Software Engineer Portfolio",
+  title: "Sai Amirthesh",
   description: "Computer Science student specializing in backend systems, distributed architectures, Java/Spring Boot, Python, and applied AI.",
   icons: {
     icon: [
