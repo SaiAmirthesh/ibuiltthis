@@ -8,11 +8,12 @@ const InterFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ibuiltthis",
-  description: "ibuilthis is a platform for building and sharing projects with the world.",
+  title: "Sai Amirthesh — Software Engineer Portfolio",
+  description: "Computer Science student specializing in backend systems, distributed architectures, Java/Spring Boot, Python, and applied AI.",
 };
 
 import SmoothScrolling from "@/components/ui/SmoothScrolling";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 export default function RootLayout({
   children,
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body
         className={`${InterFont.className} antialiased bg-[#050505] text-white/90 selection:bg-primary/30 selection:text-white min-h-screen`}
       >
+        <ScrollProgress />
         <SmoothScrolling>
           {children}
         </SmoothScrolling>

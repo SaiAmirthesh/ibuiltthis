@@ -181,50 +181,88 @@ export default function IbuiltthisScroll() {
                         {/* HERO */}
                         <motion.div
                             style={{ opacity: heroOpacity, y: heroY, filter: heroBlur }}
-                            className="absolute inset-0 flex flex-col items-center justify-center text-center"
+                            className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
                         >
-                            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white/90 drop-shadow-2xl">
-                                iBuilt<span className="text-primary drop-shadow-[0_0_30px_rgba(var(--primary),0.8)]">This</span>
+                            
+                            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white/90 drop-shadow-2xl">
+                                Sai <span className="text-primary drop-shadow-[0_0_35px_rgba(103,232,249,0.8)]">Amirthesh</span>
                             </h1>
-                            <p className="mt-6 text-xl md:text-3xl text-white/60 tracking-tight max-w-2xl font-light">
-                                Showcase Your Creations to the World.
+                            {/* Subtle accent divider line */}
+                            <div className="w-24 sm:w-36 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent my-4 sm:my-5 rounded-full shadow-[0_0_15px_rgba(103,232,249,0.6)]" />
+                            <p className="text-lg sm:text-2xl md:text-3xl text-white/80 tracking-tight max-w-3xl font-light">
+                                Backend Systems & Software Engineering
+                            </p>
+                            <p className="mt-2 text-xs sm:text-sm text-white/40 tracking-wide font-mono">
+                                Vellore Institute of Technology · B.Tech CSE (AI & Robotics)
                             </p>
                         </motion.div>
 
-                        {/* COMPONENTS */}
+                        {/* PHILOSOPHY / QUOTE */}
                         <motion.div
                             style={{ opacity: compOpacity, y: compY, filter: compBlur }}
-                            className="absolute inset-0 flex flex-col items-start justify-center left-0 md:left-24 px-8 md:px-0"
+                            className="absolute inset-0 flex flex-col items-start justify-center left-0 md:left-20 px-8 md:px-0 max-w-3xl"
                         >
-                            <h2 className="text-5xl md:text-7xl font-bold text-white/90 tracking-tighter border-l-4 border-primary pl-8 py-2 drop-shadow-2xl">
-                                Built by developers.<br />
-                                <span className="text-white/60 font-light">Designed for creators.</span>
-                            </h2>
+                            <div className="border-l-4 border-primary pl-6 md:pl-8 py-2">
+                                <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-2 block">
+                                    Engineering Mindset
+                                </span>
+                                <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl leading-tight">
+                                    Driven by curiosity.<br />
+                                    <span className="text-white/60 font-light text-2xl sm:text-3xl md:text-4xl block mt-3">
+                                        &ldquo;Understanding why it works, how it scales, and building it right.&rdquo;
+                                    </span>
+                                </h2>
+                            </div>
                         </motion.div>
 
-                        {/* ECOSYSTEM */}
+                        {/* TECH FOCUS */}
                         <motion.div
                             style={{ opacity: ecoOpacity, y: ecoY, filter: ecoBlur }}
-                            className="absolute inset-0 flex flex-col items-end justify-center right-0 md:right-24 px-8 md:px-0 text-right"
+                            className="absolute inset-0 flex flex-col items-end justify-center right-0 md:right-20 px-8 md:px-0 text-right max-w-3xl ml-auto"
                         >
-                            <h2 className="text-5xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl">
-                                Discover. Connect.<br />
-                                <span className="text-primary drop-shadow-[0_0_20px_rgba(var(--primary),0.6)]">Get Inspired.</span>
+                            <span className="text-xs uppercase tracking-widest text-primary font-semibold mb-2 block">
+                                Technology Core
+                            </span>
+                            <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white/90 tracking-tighter drop-shadow-2xl leading-tight">
+                                Java · Spring Boot<br />
+                                <span className="text-primary drop-shadow-[0_0_25px_rgba(103,232,249,0.6)]">Backend & AI</span>
                             </h2>
+                            <p className="mt-4 text-base sm:text-xl text-white/60 font-light max-w-xl">
+                                High performance APIs, clean architecture, transactional database schemas, and intelligent RAG workflows.
+                            </p>
                         </motion.div>
 
                         {/* FINAL CTA */}
                         <motion.div
                             style={{ opacity: ctaOpacity, y: ctaY, filter: ctaBlur, scale: ctaScale }}
-                            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-auto"
+                            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-auto px-4"
                         >
-                            <h2 className="text-6xl md:text-8xl font-bold text-white/90 tracking-tighter drop-shadow-2xl mb-12">
-                                Power your next build.
+                            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white/90 tracking-tighter drop-shadow-2xl mb-6">
+                                Building practical software<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-300 to-blue-400">
+                                    that solves real problems.
+                                </span>
                             </h2>
-                            <button className="px-10 py-5 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/50 hover:border-primary rounded-full font-semibold tracking-tight transition-all duration-300 shadow-[0_0_20px_rgba(var(--primary),0.1)] hover:shadow-[0_0_40px_rgba(var(--primary),0.4)] backdrop-blur-md flex items-center gap-3 group text-lg md:text-xl">
-                                Start Showcasing
-                                <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
-                            </button>
+                            <p className="text-base sm:text-xl text-white/60 font-light max-w-2xl mb-10">
+                                Explore production-grade architectures, system designs, and live activity.
+                            </p>
+                            <div className="flex flex-wrap items-center justify-center gap-4">
+                                <a
+                                    href="#projects"
+                                    className="px-8 py-4 bg-primary text-black hover:bg-primary/90 rounded-full font-semibold tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(103,232,249,0.4)] hover:shadow-[0_0_40px_rgba(103,232,249,0.7)] flex items-center gap-2 text-base md:text-lg"
+                                >
+                                    Explore Projects
+                                    <span>↓</span>
+                                </a>
+                                <a
+                                    href="/Sai_Resume.pdf"
+                                    download="Sai_Amirthesh_Resume.pdf"
+                                    className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/15 hover:border-primary/50 rounded-full font-semibold tracking-tight transition-all duration-300 backdrop-blur-md flex items-center gap-2 text-base md:text-lg"
+                                >
+                                    Download Resume
+                                    <span>↓</span>
+                                </a>
+                            </div>
                         </motion.div>
                     </div>
                 </div>
