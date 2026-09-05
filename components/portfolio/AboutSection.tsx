@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Briefcase, Code, MapPin, Download, ExternalLink, Award, Sparkles } from "lucide-react";
 import { bioData } from "@/data/bio";
+import { getAssetPath } from "@/lib/utils";
 
 export default function AboutSection() {
     return (
@@ -55,7 +56,7 @@ export default function AboutSection() {
                         {/* Resume & Link Action Bar */}
                         <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-4">
                             <a
-                                href="/Sai_Resume.pdf"
+                                href={getAssetPath("/Sai_Resume.pdf")}
                                 download="Sai_Amirthesh_Resume.pdf"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-black hover:bg-primary/90 font-semibold text-sm rounded-full transition-all duration-200 shadow-[0_0_20px_rgba(103,232,249,0.3)] hover:shadow-[0_0_30px_rgba(103,232,249,0.5)]"
                             >

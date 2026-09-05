@@ -32,11 +32,13 @@ const FALLBACK_LEETCODE: LeetCodeProfileData = {
   ],
 };
 
+import { getAssetPath } from "@/lib/utils";
+
 export async function fetchLeetCodeProfile(username: string = "SaiAmirthesh"): Promise<LeetCodeProfileData> {
   try {
     // 1. Try local server-side API proxy first (bypasses browser CORS & SSL blocks)
     try {
-      const localRes = await fetch("/api/leetcode");
+      const localRes = await fetch(getAssetPath("/api/leetcode"));
       if (localRes.ok) {
         const gqlData = await localRes.json();
         if (gqlData?.data?.matchedUser) {

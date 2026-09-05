@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import myLogo from "@/public/MyLogo.png";
 import { bioData } from "@/data/bio";
+import { getAssetPath } from "@/lib/utils";
 
 export default function Contact() {
     const [copied, setCopied] = useState(false);
@@ -71,7 +72,7 @@ export default function Contact() {
                             </button>
 
                             <a
-                                href="/Sai_Resume.pdf"
+                                href={getAssetPath("/Sai_Resume.pdf")}
                                 download="Sai_Amirthesh_Resume.pdf"
                                 className="px-5 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-medium rounded-full transition-all duration-200 flex items-center gap-2"
                             >
@@ -147,7 +148,7 @@ export default function Contact() {
                         <a href="#about" className="hover:text-white transition-colors">About</a>
                         <a href="#projects" className="hover:text-white transition-colors">Projects</a>
                         <a href="#experience" className="hover:text-white transition-colors">Experience</a>
-                        <a href="/Sai_Resume.pdf" download="Sai_Amirthesh_Resume.pdf" className="hover:text-primary transition-colors">Resume</a>
+                        <a href={getAssetPath("/Sai_Resume.pdf")} download="Sai_Amirthesh_Resume.pdf" className="hover:text-primary transition-colors">Resume</a>
                     </div>
                 </motion.div>
             </div>

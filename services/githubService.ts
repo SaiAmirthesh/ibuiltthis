@@ -16,11 +16,13 @@ export interface GithubStats {
   following: number;
 }
 
+import { getAssetPath } from "@/lib/utils";
+
 export async function fetchGithubContributions(username: string = "SaiAmirthesh"): Promise<GithubContributionsData> {
   try {
     // 1. Try local API proxy route first, then direct public API
     const endpoints = [
-      `/api/github`,
+      getAssetPath("/api/github"),
       `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
     ];
 

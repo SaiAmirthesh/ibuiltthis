@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useScroll, useTransform, motion, cubicBezier } from "framer-motion";
+import { getAssetPath } from "@/lib/utils";
 
 const TOTAL_FRAMES = 240;
 
@@ -29,7 +30,7 @@ export default function IbuiltthisScroll() {
                     const p = new Promise<void>((resolve) => {
                         const img = new window.Image();
                         const paddedIndex = j.toString().padStart(3, "0");
-                        img.src = `/sequence/ezgif-frame-${paddedIndex}.jpg`;
+                        img.src = getAssetPath(`/sequence/ezgif-frame-${paddedIndex}.jpg`);
 
                         img.onload = () => {
                             if (!isCancelled) {
@@ -272,7 +273,7 @@ export default function IbuiltthisScroll() {
                                     Explore Projects
                                 </a>
                                 <a
-                                    href="/Sai_Resume.pdf"
+                                    href={getAssetPath("/Sai_Resume.pdf")}
                                     download="Sai_Amirthesh_Resume.pdf"
                                     className="px-8 py-3.5 bg-white/5 text-white font-medium border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-200"
                                 >

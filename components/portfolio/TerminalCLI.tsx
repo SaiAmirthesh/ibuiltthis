@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, Maximize2, Minimize2, CornerDownLeft, Sparkles, ExternalLink, Download } from "lucide-react";
 import Image from "next/image";
 import myLogo from "@/public/MyLogo.png";
+import { getAssetPath } from "@/lib/utils";
 import { bioData } from "@/data/bio";
 import { projectsData } from "@/data/projects";
 import { experienceData } from "@/data/experience";
@@ -224,7 +225,7 @@ export default function TerminalCLI({
                         <div className="text-cyan-400 font-bold">✓ Opening resume download...</div>
                         <p className="text-white/60">If download doesn&apos;t start automatically, click below:</p>
                         <a
-                            href="/Sai_Resume.pdf"
+                            href={getAssetPath("/Sai_Resume.pdf")}
                             download="Sai_Amirthesh_Resume.pdf"
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-black font-semibold rounded-lg text-xs"
                         >
@@ -234,7 +235,7 @@ export default function TerminalCLI({
                 );
                 // Trigger auto download
                 const link = document.createElement("a");
-                link.href = "/Sai_Resume.pdf";
+                link.href = getAssetPath("/Sai_Resume.pdf");
                 link.download = "Sai_Amirthesh_Resume.pdf";
                 document.body.appendChild(link);
                 link.click();

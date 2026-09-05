@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import myLogo from "@/public/MyLogo.png";
 import TerminalCLI from "@/components/portfolio/TerminalCLI";
+import { getAssetPath } from "@/lib/utils";
 
 export default function Header() {
     const { scrollY } = useScroll();
@@ -104,7 +105,7 @@ export default function Header() {
                 {/* Actions */}
                 <div className="flex items-center gap-3">
                     <a
-                        href="/Sai_Resume.pdf"
+                        href={getAssetPath("/Sai_Resume.pdf")}
                         download="Sai_Amirthesh_Resume.pdf"
                         className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-primary bg-primary/10 hover:bg-primary/20 border border-primary/40 hover:border-primary rounded-full transition-all duration-200 shadow-[0_0_15px_rgba(103,232,249,0.1)] hover:shadow-[0_0_20px_rgba(103,232,249,0.3)]"
                     >
@@ -157,7 +158,7 @@ export default function Header() {
                     ))}
                     <div className="pt-2 border-t border-white/10 flex gap-3">
                         <a
-                            href="/Sai_Resume.pdf"
+                            href={getAssetPath("/Sai_Resume.pdf")}
                             download="Sai_Amirthesh_Resume.pdf"
                             className="flex-1 text-center py-2 text-xs font-medium text-primary bg-primary/10 border border-primary/40 rounded-xl"
                         >
